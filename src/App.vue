@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <TheNavigation></TheNavigation>
+    <transition name="slide" mode="out-in">
+      <router-view :key="$route.path"/>
+    </transition>
   </div>
 </template>
+
+<script>
+import TheNavigation from '@/components/TheNavigation';
+export default {
+  components: {
+    TheNavigation
+  }
+}
+</script>
 
 <style>
 #app {
@@ -17,16 +25,21 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+.slide-enter-active, .slide-leave-active{
+  transition: opacity 1s, transform 1s;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.slide-enter,
+.slide-leave-to{
+  opacity: 0;
+  transform: translateX(-30%);
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.cta-btn {
+  padding: 10px 25px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: rgb(57, 110, 4);
+  border: none;
+  border-radius: 3px;
 }
 </style>
