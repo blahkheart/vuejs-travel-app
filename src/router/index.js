@@ -49,6 +49,14 @@ const routes = [
     component:() => import(/*webpackChunckName: "login" */ "../views/Login.vue")
   },
   {
+    path: "/invoices",
+    name: "invoices",
+    component:() => import(/*webpackChunckName: "invoices" */ "../views/Invoices.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     name: "NotFound",
     path: "/404",
     alias: "*",
@@ -81,11 +89,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next)=> {
-  if(to.meta.requiresAuth){
-  // if(to.matched.some(record => record.meta.requiresAuth)){
+  // if(to.meta.requiresAuth){
+  if(to.matched.some(record => record.meta.requiresAuth)){
     if(!store.user){
       next({
-        name: "Login"
+        name: "Login",
+        query: {redirect: to.fullPath}
       });
     }else {
       next();

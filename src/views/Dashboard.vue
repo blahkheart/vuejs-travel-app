@@ -1,7 +1,10 @@
 <template>
     <div class="dashboard-wrap">
         <h1>Welcome {{user}}</h1>
-        <button class="cta-btn">Logout</button>
+            <p style="text-align:center">
+                <router-link :to="{name: 'invoices'}">Invoices</router-link>
+            </p>
+        <button @click="logout" class="cta-btn">Logout</button>
     </div>
 </template>
 
@@ -13,6 +16,12 @@ export default {
     data () {
         return {
             user: store.user
+        }
+    },
+    methods: {
+        logout () {
+            store.user = ''
+            this.$router.push('/')
         }
     }
 }
